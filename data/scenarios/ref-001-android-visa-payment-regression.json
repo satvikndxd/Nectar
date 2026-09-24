@@ -1,0 +1,197 @@
+{
+  "acceptable_recommendations": [
+    "roll back deployment checkout-android 2.8.0",
+    "disable the new payment SDK path for android via feature flag"
+  ],
+  "description": "Reference scenario. A successful deployment of the Android client (v2.8.0) introduces a payment SDK regression that fails Visa tokenization. Payment failures rise, checkout conversion falls, and revenue follows. A benign web deployment lands a day earlier as a distractor.",
+  "difficulty_tags": [
+    "single-cause",
+    "segment-specific",
+    "deployment-linked",
+    "distractor-present"
+  ],
+  "expected_evidence": [
+    "payment failure rate rises sharply after 2026-09-06T14:00Z",
+    "failures concentrate in platform=android and payment_method=visa",
+    "failure code sdk_tokenization_error appears only after the change",
+    "change point aligns with deployment checkout-android 2.8.0",
+    "web checkout deployment 2.7.4 shows no matching metric change"
+  ],
+  "faults": [
+    {
+      "checkout_rate_multiplier": 1.0,
+      "ends_at": null,
+      "failure_code": "sdk_tokenization_error",
+      "fault_id": "android-visa-tokenization-regression",
+      "linked_deployment_version": "2.8.0",
+      "payment_rate_multiplier": 1.0,
+      "payment_success_drop": 0.27,
+      "ramp_minutes": 0.0,
+      "root_cause_category": "deployment_regression",
+      "root_cause_detail": "Android client 2.8.0 payment SDK fails Visa tokenization",
+      "starts_at": "2026-09-06T14:00:00Z",
+      "targets": {
+        "app_versions": [],
+        "payment_methods": [
+          "visa"
+        ],
+        "plan_tiers": [],
+        "platforms": [
+          "android"
+        ],
+        "regions": []
+      }
+    }
+  ],
+  "generator_version": "1.0.0",
+  "scenario_id": "ref-001-android-visa-payment-regression",
+  "unacceptable_recommendations": [
+    "roll back deployment checkout-web 2.7.4",
+    "take no action",
+    "increase marketing spend to offset revenue"
+  ],
+  "world": {
+    "baseline_app_version": "2.7.0",
+    "customer_pool_size": 20000,
+    "deployments": [
+      {
+        "client_platforms": [
+          "web"
+        ],
+        "commit_sha": "9f1c0aa3d21b",
+        "deployed_at": "2026-09-05T10:00:00Z",
+        "description": "Copy changes on the web checkout page (benign distractor)",
+        "service": "checkout-web",
+        "status": "succeeded",
+        "version": "2.7.4"
+      },
+      {
+        "client_platforms": [
+          "android"
+        ],
+        "commit_sha": "4d7e2b91c5aa",
+        "deployed_at": "2026-09-06T14:00:00Z",
+        "description": "Android payment SDK upgrade",
+        "service": "checkout-android",
+        "status": "succeeded",
+        "version": "2.8.0"
+      }
+    ],
+    "duration_hours": 192,
+    "funnel": {
+      "checkout_rate": 0.42,
+      "method_success_delta": {
+        "amex": -0.01,
+        "mastercard": 0.002,
+        "paypal": -0.004,
+        "visa": 0.004
+      },
+      "payment_rate": 0.61,
+      "payment_success_rate": 0.965,
+      "plan_tier_payment_multiplier": {
+        "enterprise": 1.12,
+        "free": 0.86,
+        "pro": 1.05
+      },
+      "platform_checkout_multiplier": {
+        "android": 0.97,
+        "ios": 1.06,
+        "web": 1.0
+      },
+      "retry_probability": 0.55
+    },
+    "mix": {
+      "payment_method": {
+        "amex": 0.11,
+        "mastercard": 0.28,
+        "paypal": 0.15,
+        "visa": 0.46
+      },
+      "plan_tier": {
+        "enterprise": 0.1,
+        "free": 0.55,
+        "pro": 0.35
+      },
+      "platform": {
+        "android": 0.31,
+        "ios": 0.34,
+        "web": 0.35
+      },
+      "region": {
+        "apac": 0.17,
+        "eu": 0.3,
+        "latam": 0.08,
+        "na": 0.45
+      }
+    },
+    "orders": {
+      "catalog": [
+        {
+          "sku": "starter-seat",
+          "unit_amount_minor": 2900,
+          "weight": 0.4
+        },
+        {
+          "sku": "team-seat",
+          "unit_amount_minor": 7900,
+          "weight": 0.32
+        },
+        {
+          "sku": "growth-addon",
+          "unit_amount_minor": 14900,
+          "weight": 0.18
+        },
+        {
+          "sku": "enterprise-seat",
+          "unit_amount_minor": 39900,
+          "weight": 0.1
+        }
+      ],
+      "currency": "USD",
+      "max_lines": 3,
+      "quantity_lambda": 0.7
+    },
+    "organization_id": "018f2d3c-0000-7000-8000-000000000001",
+    "seed": 20260901,
+    "start": "2026-09-01T00:00:00Z",
+    "traffic": {
+      "base_sessions_per_hour": 120.0,
+      "daily_growth_rate": 0.0012,
+      "day_of_week_factors": [
+        1.05,
+        1.08,
+        1.06,
+        1.04,
+        0.98,
+        0.82,
+        0.78
+      ],
+      "hour_of_day_factors": [
+        0.45,
+        0.35,
+        0.3,
+        0.28,
+        0.3,
+        0.38,
+        0.55,
+        0.78,
+        0.95,
+        1.08,
+        1.15,
+        1.18,
+        1.2,
+        1.22,
+        1.25,
+        1.3,
+        1.38,
+        1.45,
+        1.5,
+        1.42,
+        1.25,
+        1.0,
+        0.75,
+        0.55
+      ]
+    }
+  }
+}
