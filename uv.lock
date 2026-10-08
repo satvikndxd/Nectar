@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.11"
 resolution-markers = [
     "python_full_version >= '3.15'",
@@ -9,6 +9,7 @@ resolution-markers = [
 [manifest]
 members = [
     "niglas",
+    "niglas-anomaly",
     "niglas-api",
     "niglas-generator",
     "niglas-schemas",
@@ -926,6 +927,7 @@ name = "niglas"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "niglas-anomaly" },
     { name = "niglas-api" },
     { name = "niglas-generator" },
     { name = "niglas-schemas" },
@@ -945,6 +947,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "niglas-anomaly", editable = "services/anomaly-engine" },
     { name = "niglas-api", editable = "apps/api" },
     { name = "niglas-generator", editable = "data/generators" },
     { name = "niglas-schemas", editable = "packages/schemas" },
@@ -960,6 +963,21 @@ dev = [
     { name = "pytest", specifier = ">=8.3" },
     { name = "pytest-cov", specifier = ">=5.0" },
     { name = "ruff", specifier = ">=0.6" },
+]
+
+[[package]]
+name = "niglas-anomaly"
+version = "0.1.0"
+source = { editable = "services/anomaly-engine" }
+dependencies = [
+    { name = "niglas-schemas" },
+    { name = "niglas-shared" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "niglas-schemas", editable = "packages/schemas" },
+    { name = "niglas-shared", editable = "packages/shared" },
 ]
 
 [[package]]

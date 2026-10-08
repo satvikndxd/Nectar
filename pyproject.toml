@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Niglas - autonomous business operations and decision intelligence platform"
 requires-python = ">=3.11"
 dependencies = [
+    "niglas-anomaly",
     "niglas-api",
     "niglas-generator",
     "niglas-schemas",
@@ -22,9 +23,10 @@ dev = [
 ]
 
 [tool.uv.workspace]
-members = ["packages/*", "apps/api", "data/generators"]
+members = ["packages/*", "apps/api", "data/generators", "services/anomaly-engine"]
 
 [tool.uv.sources]
+niglas-anomaly = { workspace = true }
 niglas-schemas = { workspace = true }
 niglas-shared = { workspace = true }
 niglas-generator = { workspace = true }
@@ -33,14 +35,15 @@ niglas-api = { workspace = true }
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-src = ["packages/schemas/src", "packages/shared/src", "data/generators/src", "apps/api/src", "tests"]
+src = ["packages/schemas/src", "packages/shared/src", "data/generators/src", "apps/api/src",
+       "services/anomaly-engine/src", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "UP", "B", "A", "C4", "SIM", "RUF", "ANN", "S", "DTZ", "PT"]
 ignore = ["ANN401"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["niglas_api", "niglas_generator", "niglas_schemas", "niglas_shared"]
+known-first-party = ["niglas_anomaly", "niglas_api", "niglas_generator", "niglas_schemas", "niglas_shared"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["S101", "S311", "ANN201", "ANN001", "PT018"]
@@ -50,7 +53,7 @@ known-first-party = ["niglas_api", "niglas_generator", "niglas_schemas", "niglas
 python_version = "3.11"
 strict = true
 warn_unreachable = true
-mypy_path = "packages/schemas/src:packages/shared/src:data/generators/src:apps/api/src"
+mypy_path = "packages/schemas/src:packages/shared/src:data/generators/src:apps/api/src:services/anomaly-engine/src"
 plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]
