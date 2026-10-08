@@ -1,3 +1,4 @@
+from copy import deepcopy
 from datetime import UTC, datetime
 from typing import Any
 from uuid import UUID, uuid4
@@ -84,6 +85,33 @@ def test_ingest_accepts_valid_events_for_the_authenticated_org() -> None:
 
     assert response.status_code == 202
     assert response.json() == {"accepted_count": 1, "duplicate_count": 0}
+
+
+def test_ingest_counts_retried_events_as_duplicates() -> None:
+    api = client()
+    event = session_event()
+    headers = {"Authorization": f"Bearer {token(Role.OPERATOR)}"}
+
+    first = api.post("/v1/events/batches", headers=headers, json={"events": [event]})
+    second = api.post("/v1/events/batches", headers=headers, json={"events": [event]})
+
+    assert first.status_code == 202
+    assert second.status_code == 202
+    assert second.json() == {"accepted_count": 0, "duplicate_count": 1}
+
+
+def test_ingest_rejects_idempotency_key_conflicts() -> None:
+    api = client()
+    event = session_event()
+    conflicting = deepcopy(event)
+    conflicting["event_id"] = str(uuid4())
+    headers = {"Authorization": f"Bearer {token(Role.OPERATOR)}"}
+
+    first = api.post("/v1/events/batches", headers=headers, json={"events": [event]})
+    second = api.post("/v1/events/batches", headers=headers, json={"events": [conflicting]})
+
+    assert first.status_code == 202
+    assert second.status_code == 409
 
 
 def test_ingest_requires_the_events_ingest_permission() -> None:

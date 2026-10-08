@@ -7,6 +7,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, ConfigDict, Field
 
 from niglas_api.auth import require_permission
+from niglas_api.dependencies import get_event_store
+from niglas_api.event_store import IdempotencyConflictError, InMemoryEventStore
 from niglas_api.settings import Settings, get_settings
 from niglas_schemas.events import EventEnvelope
 from niglas_shared.rbac import Permission, Principal
@@ -32,6 +34,7 @@ def ingest_batch(
     request: EventBatchRequest,
     settings: Annotated[Settings, Depends(get_settings)],
     principal: Annotated[Principal, Depends(require_permission(Permission.EVENTS_INGEST))],
+    event_store: Annotated[InMemoryEventStore, Depends(get_event_store)],
 ) -> EventBatchResponse:
     """Validate a batch before handing it to durable storage."""
     if len(request.events) > settings.max_events_per_batch:
@@ -51,7 +54,18 @@ def ingest_batch(
             detail="events must belong to the authenticated organization",
         )
 
-    return EventBatchResponse(accepted_count=len(request.events))
+    try:
+        result = event_store.ingest(request.events)
+    except IdempotencyConflictError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="idempotency key already exists for a different event",
+        ) from exc
+
+    return EventBatchResponse(
+        accepted_count=result.accepted_count,
+        duplicate_count=result.duplicate_count,
+    )
 
 
 class PrincipalResponse(BaseModel):
