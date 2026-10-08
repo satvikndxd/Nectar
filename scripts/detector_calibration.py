@@ -10,7 +10,7 @@ not looked at before the threshold was fixed (held-out split).
 
 Usage:
     uv run python scripts/detector_calibration.py --seeds 20 --seed-offset 0 \
-        --out artifacts/eval/detector_calibration_tuning.json
+        --out docs/eval-runs/detector_calibration_tuning.json
 """
 
 import argparse

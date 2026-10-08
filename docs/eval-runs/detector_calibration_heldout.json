@@ -1,0 +1,232 @@
+{
+  "generated_at": "2026-10-08T04:06:15.186220+00:00",
+  "git_sha": "86b463b61b7f2332777c860ad4655d6ccb45f7c7",
+  "generator_version": "1.0.0",
+  "scenario_id": "ref-001-android-visa-payment-regression",
+  "metric": "payment_failure_rate",
+  "detector": {
+    "current_buckets": 6,
+    "baseline_buckets": 72,
+    "z_threshold": 5.0,
+    "min_relative_change": 0.25,
+    "min_denominator": 30,
+    "direction": "increase",
+    "name": "proportion_shift_ztest",
+    "version": "1.0.0"
+  },
+  "faulted": {
+    "seed": 20260901,
+    "max_slice_score": 6.521,
+    "max_slice": {
+      "platform": "android"
+    },
+    "default_detector_flagged": true,
+    "first_detected_at": "2026-09-06T19:00:00+00:00",
+    "first_detected_slice": {
+      "payment_method": "visa"
+    },
+    "incident_start": "2026-09-06T14:00:00+00:00"
+  },
+  "clean": [
+    {
+      "seed": 1001,
+      "max_slice_score": 2.968,
+      "max_slice": {
+        "platform": "ios"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1002,
+      "max_slice_score": 3.304,
+      "max_slice": {
+        "payment_method": "visa"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1003,
+      "max_slice_score": 3.632,
+      "max_slice": {
+        "payment_method": "paypal"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1004,
+      "max_slice_score": 3.235,
+      "max_slice": {
+        "app_version": "2.8.0"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1005,
+      "max_slice_score": 3.507,
+      "max_slice": {
+        "platform": "web"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1006,
+      "max_slice_score": 3.308,
+      "max_slice": {
+        "payment_method": "mastercard"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1007,
+      "max_slice_score": 3.511,
+      "max_slice": {
+        "payment_method": "mastercard"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1008,
+      "max_slice_score": 3.405,
+      "max_slice": {
+        "payment_method": "mastercard"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1009,
+      "max_slice_score": 3.976,
+      "max_slice": {},
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1010,
+      "max_slice_score": 3.944,
+      "max_slice": {
+        "platform": "android"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1011,
+      "max_slice_score": 3.127,
+      "max_slice": {
+        "platform": "web"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1012,
+      "max_slice_score": 3.378,
+      "max_slice": {
+        "app_version": "2.7.0"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1013,
+      "max_slice_score": 3.39,
+      "max_slice": {
+        "payment_method": "visa"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1014,
+      "max_slice_score": 3.363,
+      "max_slice": {
+        "app_version": "2.7.4"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1015,
+      "max_slice_score": 4.343,
+      "max_slice": {
+        "app_version": "2.7.4"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1016,
+      "max_slice_score": 3.246,
+      "max_slice": {
+        "platform": "web"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1017,
+      "max_slice_score": 4.293,
+      "max_slice": {
+        "platform": "android"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1018,
+      "max_slice_score": 4.055,
+      "max_slice": {},
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1019,
+      "max_slice_score": 3.504,
+      "max_slice": {
+        "payment_method": "paypal"
+      },
+      "default_detector_flagged": false,
+      "first_detected_at": null,
+      "first_detected_slice": null
+    },
+    {
+      "seed": 1020,
+      "max_slice_score": 7.196,
+      "max_slice": {
+        "platform": "android"
+      },
+      "default_detector_flagged": true,
+      "first_detected_at": "2026-09-07T09:00:00+00:00",
+      "first_detected_slice": {
+        "platform": "android"
+      }
+    }
+  ],
+  "clean_false_positive_worlds": 1,
+  "clean_max_slice_score": 7.196
+}
