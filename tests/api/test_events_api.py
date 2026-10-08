@@ -100,6 +100,21 @@ def test_ingest_counts_retried_events_as_duplicates() -> None:
     assert second.json() == {"accepted_count": 0, "duplicate_count": 1}
 
 
+def test_metrics_endpoint_reads_ingested_events_for_the_authenticated_org() -> None:
+    api = client()
+    event = session_event()
+    ingest_headers = {"Authorization": f"Bearer {token(Role.OPERATOR)}"}
+    read_headers = {"Authorization": f"Bearer {token(Role.VIEWER)}"}
+
+    ingest = api.post("/v1/events/batches", headers=ingest_headers, json={"events": [event]})
+    metrics = api.get("/v1/metrics/funnel", headers=read_headers)
+
+    assert ingest.status_code == 202
+    assert metrics.status_code == 200
+    assert metrics.json()["total_sessions"] == 1
+    assert metrics.json()["checkout_sessions"] == 1
+
+
 def test_ingest_rejects_idempotency_key_conflicts() -> None:
     api = client()
     event = session_event()

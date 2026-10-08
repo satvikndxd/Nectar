@@ -3,7 +3,7 @@
 from fastapi import FastAPI
 
 from niglas_api.event_store import InMemoryEventStore
-from niglas_api.routes import events, health
+from niglas_api.routes import events, health, metrics
 
 
 def create_app() -> FastAPI:
@@ -16,6 +16,7 @@ def create_app() -> FastAPI:
     app.state.event_store = InMemoryEventStore()
     app.include_router(health.router)
     app.include_router(events.router)
+    app.include_router(metrics.router)
     return app
 
 
